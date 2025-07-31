@@ -4,11 +4,11 @@ import SessionLayout from '../components/SessionLayout/index.tsx';
 import { ROUTES } from '../constants/index.ts';
 import Home from '../pages/Home/index.tsx';
 import Login from '../pages/Login/index.tsx';
+import NotFoundPage from '../pages/NotFoundPage/index.tsx';
 import AuthenticatedLayout from './AuthenticatedLayout.tsx';
 import PublicLayout from './PublicLayout.tsx';
 
 const router = createBrowserRouter([
-  // I recommend you reflect the routes here in the pages folder
   {
     path: ROUTES.HOME,
     element: <SessionLayout />,
@@ -38,10 +38,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: '*',
-  //   element: <NotFoundPage />,
-  // },
+  {
+    path: '*',
+    element: <NotFoundPage />,
+  },
 ]);
 
 export default router;
