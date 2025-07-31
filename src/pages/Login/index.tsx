@@ -8,10 +8,10 @@ import {
   Title,
 } from '@mantine/core';
 import classes from './Login.module.css';
-import useHomePageViewModel from './viewModel';
+import useLoginViewModel from './viewModel';
 
-const HomePage = () => {
-  const { form, onSubmit } = useHomePageViewModel();
+const Login = () => {
+  const { form, onSubmit } = useLoginViewModel();
   return (
     <Container size={420} my={40}>
       <Stack justify="center">
@@ -48,4 +48,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Login;

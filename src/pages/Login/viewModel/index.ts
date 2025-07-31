@@ -12,7 +12,7 @@ import {
 import { pb } from '../../../utils/pocketbase';
 import { loginSchema } from '../utils';
 
-const useHomePageViewModel = () => {
+const useLoginViewModel = () => {
   const setUser = usePbStore((state: AppState) => state.setUser);
   const user = useUser();
   const { navigateHome } = useAppNavigation();
@@ -66,4 +66,4 @@ const useHomePageViewModel = () => {
   };
 };
 
-export default useHomePageViewModel;
+export default useLoginViewModel;
