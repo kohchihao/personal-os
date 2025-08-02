@@ -7,7 +7,7 @@ import {
   Title,
 } from '@mantine/core';
 import { IconCoins, IconTrendingUp, IconWallet } from '@tabler/icons-react';
-import type { Transaction } from '../../../../api/getETFTransactions';
+import type { Transaction } from '../../../../api/etf/getETFTransactions';
 import { formatCurrency } from '../../../../utils/currency';
 
 interface StatsCardsProps {

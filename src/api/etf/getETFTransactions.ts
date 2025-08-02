@@ -1,4 +1,4 @@
-import { pb } from '../utils/pocketbase';
+import { pb } from '../../utils/pocketbase';
 
 export type Transaction = {
   purchase_datetime?: Date;

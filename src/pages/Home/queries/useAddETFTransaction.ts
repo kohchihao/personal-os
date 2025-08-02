@@ -2,7 +2,7 @@ import { notifications } from '@mantine/notifications';
 import { useMutation } from '@tanstack/react-query';
 import addETFTransaction, {
   type AddTransactionParams,
-} from '../../../api/addETFTransaction';
+} from '../../../api/etf/addETFTransaction';
 import queryClient from '../../../utils/reactQuery';
 
 type UseAddETFTransactionParams = {

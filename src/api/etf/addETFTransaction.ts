@@ -1,4 +1,4 @@
-import { pb } from '../utils/pocketbase';
+import { pb } from '../../utils/pocketbase';
 import type { Transaction } from './getETFTransactions';
 
 export type AddTransactionParams = Omit<Transaction, 'id' | 'user'>;

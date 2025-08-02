@@ -1,6 +1,6 @@
 import { notifications } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteETFTransaction } from '../../../api/deleteETFTransaction';
+import { deleteETFTransaction } from '../../../api/etf/deleteETFTransaction';
 
 const useDeleteETFTransaction = () => {
   const queryClient = useQueryClient();
