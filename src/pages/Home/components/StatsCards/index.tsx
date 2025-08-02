@@ -24,14 +24,15 @@ const StatsCards = ({ statistics }: StatsCardsProps) => {
 
   const statsData = [
     {
-      title: 'Total Invested',
-      value: formatCurrency(totalCapitalInvested + totalTransactionFee),
+      title: 'Total Capital Invested',
+      value: formatCurrency(totalCapitalInvested),
+      subtitle: `${formatCurrency(totalTransactionFee)} in fees`,
       icon: IconWallet,
-      color: 'orange',
+      color: 'green',
     },
     {
       title: 'Total Units',
-      value: totalUnits.toFixed(2),
+      value: totalUnits.toFixed(4),
       icon: IconCoins,
       color: 'blue',
     },
@@ -42,14 +43,39 @@ const StatsCards = ({ statistics }: StatsCardsProps) => {
         averageCostPerUnit
       )}`,
       icon: IconTrendingUp,
-      color: 'green',
+      color: 'grape',
     },
     {
-      title: 'Total Capital Invested',
-      value: formatCurrency(totalCapitalInvested),
-      subtitle: `${formatCurrency(totalTransactionFee)} in fees`,
+      title: 'Total Invested',
+      value: formatCurrency(totalCapitalInvested + totalTransactionFee),
       icon: IconWallet,
-      color: 'green',
+      color: 'gray',
+    },
+
+    {
+      title: 'Current ETF Value',
+      value: formatCurrency(0),
+      icon: IconWallet,
+      color: 'gray',
+    },
+    {
+      title: 'Market Value',
+      value: formatCurrency(0),
+      icon: IconWallet,
+      color: 'gray',
+    },
+    {
+      title: 'Return on Invested Capital',
+      value: formatCurrency(0),
+      subtitle: 'With fees: X',
+      icon: IconWallet,
+      color: 'gray',
+    },
+    {
+      title: 'Gain/Loss with fees',
+      value: formatCurrency(0),
+      icon: IconWallet,
+      color: 'gray',
     },
   ];
 

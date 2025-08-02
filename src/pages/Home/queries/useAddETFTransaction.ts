@@ -19,6 +19,8 @@ const useAddETFTransaction = ({
     onSuccess: () => {
       // Invalidate the ETF transactions query to refresh the data
       queryClient.invalidateQueries({ queryKey: ['etfTransactions'] });
+      queryClient.invalidateQueries({ queryKey: ['etfStatistics'] });
+
       closeModal();
       resetForm();
     },
