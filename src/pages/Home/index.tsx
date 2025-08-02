@@ -20,6 +20,7 @@ import AddTransaction from './components/AddTransaction';
 import AddTransactionModal from './components/AddTransactionModal';
 import Experiment from './components/Experiment';
 import ExportCSV from './components/ExportCSV';
+import StatsCards from './components/StatsCards';
 import useETFViewModel from './viewModel';
 
 const Home = () => {
@@ -85,13 +86,15 @@ const Home = () => {
   ));
 
   return (
-    <Container size="xl">
+    <Container size="xl" px={{ base: 0 }}>
       <Stack justify="center">
         <Flex justify="flex-end" align="center" gap="md">
           <ExportCSV />
           <Experiment />
           <AddTransaction onClick={addETFTransactionModel.onOpen} />
         </Flex>
+
+        <StatsCards transactions={transactions || []} />
 
         <Card shadow="none" padding="lg" radius="md" withBorder>
           <Card.Section inheritPadding py="lg">
