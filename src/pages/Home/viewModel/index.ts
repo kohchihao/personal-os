@@ -1,3 +1,4 @@
+import useETFStatistics from '../../../queries/useETFStatistics';
 import useETFTransactions from '../../../queries/useETFTransactions';
 import useDeleteETFTransaction from '../queries/useDeleteETFTransaction';
 import useAddETFTransactionModel from './useAddETFTransactionModel';
@@ -10,9 +11,11 @@ const useETFViewModel = () => {
   const handleDeleteTransaction = (id: string) => {
     deleteETFTransaction.mutate(id);
   };
+  const { data: statistics } = useETFStatistics();
 
   return {
     transactions,
+    statistics,
     isLoading,
     addETFTransactionModel,
     handleDeleteTransaction,

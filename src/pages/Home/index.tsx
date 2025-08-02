@@ -26,6 +26,7 @@ import useETFViewModel from './viewModel';
 const Home = () => {
   const {
     transactions,
+    statistics,
     isLoading,
     addETFTransactionModel,
     handleDeleteTransaction,
@@ -94,7 +95,7 @@ const Home = () => {
           <AddTransaction onClick={addETFTransactionModel.onOpen} />
         </Flex>
 
-        <StatsCards transactions={transactions || []} />
+        <StatsCards statistics={statistics} />
 
         <Card shadow="none" padding="lg" radius="md" withBorder>
           <Card.Section inheritPadding py="lg">

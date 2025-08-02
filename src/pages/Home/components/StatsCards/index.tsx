@@ -7,33 +7,28 @@ import {
   Title,
 } from '@mantine/core';
 import { IconCoins, IconTrendingUp, IconWallet } from '@tabler/icons-react';
-import type { Transaction } from '../../../../api/etf/getETFTransactions';
+import type { Statistics } from '../../../../api/etf/getETFStatisitcs';
 import { formatCurrency } from '../../../../utils/currency';
 
 interface StatsCardsProps {
-  transactions: Transaction[];
+  statistics?: Statistics;
 }
 
-const StatsCards = ({ transactions }: StatsCardsProps) => {
-  // Calculate total units
-  const totalUnits = transactions.reduce((sum, transaction) => {
-    return sum + (transaction.units_bought || 0);
-  }, 0);
-
-  // Calculate average cost with fees
-  const totalCostWithFees = transactions.reduce((sum, transaction) => {
-    return sum + (transaction.total_cost_with_fee || 0);
-  }, 0);
-  const averageCostWithFees =
-    totalUnits > 0 ? totalCostWithFees / totalUnits : 0;
-
-  // Calculate total invested and total fees
-  const totalInvested = totalCostWithFees;
-  const totalFees = transactions.reduce((sum, transaction) => {
-    return sum + (transaction.transaction_fee || 0);
-  }, 0);
+const StatsCards = ({ statistics }: StatsCardsProps) => {
+  const totalUnits = statistics?.total_units || 0;
+  const totalCapitalInvested = statistics?.total_invested_capital || 0;
+  const averageCostPerUnitWithFee =
+    statistics?.average_cost_per_unit_with_fee || 0;
+  const totalTransactionFee = statistics?.total_transaction_fee || 0;
+  const averageCostPerUnit = statistics?.average_cost_per_unit || 0;
 
   const statsData = [
+    {
+      title: 'Total Invested',
+      value: formatCurrency(totalCapitalInvested + totalTransactionFee),
+      icon: IconWallet,
+      color: 'orange',
+    },
     {
       title: 'Total Units',
       value: totalUnits.toFixed(2),
@@ -41,17 +36,20 @@ const StatsCards = ({ transactions }: StatsCardsProps) => {
       color: 'blue',
     },
     {
-      title: 'Average Cost (With Fees)',
-      value: formatCurrency(averageCostWithFees),
+      title: 'Average Cost/Unit (With Fees)',
+      value: formatCurrency(averageCostPerUnitWithFee),
+      subtitle: `Avg. Cost/Unit w/o fees: ${formatCurrency(
+        averageCostPerUnit
+      )}`,
       icon: IconTrendingUp,
       color: 'green',
     },
     {
-      title: 'Total Invested',
-      value: formatCurrency(totalInvested),
-      subtitle: `Total Fees: ${formatCurrency(totalFees)}`,
+      title: 'Total Capital Invested',
+      value: formatCurrency(totalCapitalInvested),
+      subtitle: `${formatCurrency(totalTransactionFee)} in fees`,
       icon: IconWallet,
-      color: 'orange',
+      color: 'green',
     },
   ];
 
@@ -96,7 +94,7 @@ const StatsCards = ({ transactions }: StatsCardsProps) => {
       </ScrollArea>
 
       {/* Desktop: Grid layout */}
-      <SimpleGrid cols={3} spacing="md" visibleFrom="sm">
+      <SimpleGrid cols={4} spacing="md" visibleFrom="sm">
         {statsData.map((stat, index) => {
           const Icon = stat.icon;
           return (
