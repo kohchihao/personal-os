@@ -126,7 +126,7 @@ const Home = () => {
             </Text>
           </Card.Section>
 
-          <Table.ScrollContainer minWidth={500}>
+          <Table.ScrollContainer minWidth={700}>
             <Paper withBorder mt="md" radius="md" shadow="none">
               <Table highlightOnHover verticalSpacing="md">
                 <Table.Thead>

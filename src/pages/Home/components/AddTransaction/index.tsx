@@ -1,4 +1,5 @@
 import { Button } from '@mantine/core';
+import { IconPlus } from '@tabler/icons-react';
 
 type Props = {
   onClick?: () => void;
@@ -6,8 +7,12 @@ type Props = {
 
 const AddTransaction = ({ onClick }: Props) => {
   return (
-    <Button color="black" onClick={onClick}>
-      Add Transaction
+    <Button
+      color="black"
+      onClick={onClick}
+      leftSection={<IconPlus size={16} />}
+    >
+      Add
     </Button>
   );
 };
