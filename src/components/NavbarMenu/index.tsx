@@ -19,6 +19,7 @@ const NavbarMenu = () => {
 
       <Menu.Dropdown>
         <Menu.Label>Application</Menu.Label>
+
         {/* <Menu.Item
           leftSection={<IconSettings size={14} />}
           href={ROUTES.SETTINGS_PAGE}

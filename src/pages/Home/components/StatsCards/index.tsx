@@ -8,6 +8,7 @@ import {
 } from '@mantine/core';
 import { IconCoins, IconTrendingUp, IconWallet } from '@tabler/icons-react';
 import type { Statistics } from '../../../../api/etf/getETFStatisitcs';
+import { usePrivacy } from '../../../../context/privacyContext';
 import { formatCurrency } from '../../../../utils/currency';
 
 interface StatsCardsProps {
@@ -15,6 +16,7 @@ interface StatsCardsProps {
 }
 
 const StatsCards = ({ statistics }: StatsCardsProps) => {
+  const { isPrivacyMode } = usePrivacy();
   const totalUnits = statistics?.total_units || 0;
   const totalCapitalInvested = statistics?.total_invested_capital || 0;
   const averageCostPerUnitWithFee =
@@ -25,55 +27,59 @@ const StatsCards = ({ statistics }: StatsCardsProps) => {
   const statsData = [
     {
       title: 'Total Capital Invested',
-      value: formatCurrency(totalCapitalInvested),
-      subtitle: `${formatCurrency(totalTransactionFee)} in fees`,
+      value: formatCurrency(totalCapitalInvested, isPrivacyMode),
+      subtitle: `${formatCurrency(totalTransactionFee, isPrivacyMode)} in fees`,
       icon: IconWallet,
       color: 'green',
     },
     {
       title: 'Total Units',
-      value: totalUnits.toFixed(4),
+      value: isPrivacyMode ? '****' : totalUnits.toFixed(4),
       icon: IconCoins,
       color: 'blue',
     },
     {
       title: 'Average Cost/Unit (With Fees)',
-      value: formatCurrency(averageCostPerUnitWithFee),
+      value: formatCurrency(averageCostPerUnitWithFee, isPrivacyMode),
       subtitle: `Avg. Cost/Unit w/o fees: ${formatCurrency(
-        averageCostPerUnit
+        averageCostPerUnit,
+        isPrivacyMode
       )}`,
       icon: IconTrendingUp,
       color: 'grape',
     },
     {
       title: 'Total Invested',
-      value: formatCurrency(totalCapitalInvested + totalTransactionFee),
+      value: formatCurrency(
+        totalCapitalInvested + totalTransactionFee,
+        isPrivacyMode
+      ),
       icon: IconWallet,
       color: 'gray',
     },
 
     {
       title: 'Current ETF Value',
-      value: formatCurrency(0),
+      value: formatCurrency(0, isPrivacyMode),
       icon: IconWallet,
       color: 'gray',
     },
     {
       title: 'Market Value',
-      value: formatCurrency(0),
+      value: formatCurrency(0, isPrivacyMode),
       icon: IconWallet,
       color: 'gray',
     },
     {
       title: 'Return on Invested Capital',
-      value: formatCurrency(0),
+      value: formatCurrency(0, isPrivacyMode),
       subtitle: 'With fees: X',
       icon: IconWallet,
       color: 'gray',
     },
     {
       title: 'Gain/Loss with fees',
-      value: formatCurrency(0),
+      value: formatCurrency(0, isPrivacyMode),
       icon: IconWallet,
       color: 'gray',
     },

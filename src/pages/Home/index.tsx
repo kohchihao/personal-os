@@ -12,9 +12,16 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { IconCalendar, IconDots, IconTrash } from '@tabler/icons-react';
+import {
+  IconCalendar,
+  IconDots,
+  IconEye,
+  IconEyeClosed,
+  IconTrash,
+} from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import FullPageLoader from '../../components/FullPageLoader';
+import { usePrivacy } from '../../context/privacyContext';
 import { formatCurrency } from '../../utils/currency';
 import AddTransaction from './components/AddTransaction';
 import AddTransactionModal from './components/AddTransactionModal';
@@ -33,6 +40,8 @@ const Home = () => {
     isDeletingTransaction,
   } = useETFViewModel();
 
+  const { isPrivacyMode, togglePrivacyMode } = usePrivacy();
+
   if (isLoading) {
     return <FullPageLoader />;
   }
@@ -40,7 +49,7 @@ const Home = () => {
   const rows = transactions?.map((element) => (
     <Table.Tr key={element.id}>
       <Table.Td>
-        <Pill>{element.etf_name}</Pill>
+        <Pill>{isPrivacyMode ? '****' : element.etf_name}</Pill>
       </Table.Td>
       <Table.Td>
         <Group gap="xs" align="center">
@@ -51,14 +60,22 @@ const Home = () => {
         </Group>
       </Table.Td>
       <Table.Td style={{ textAlign: 'center' }}>
-        {element.units_bought}
+        {isPrivacyMode ? '****' : element.units_bought}
       </Table.Td>
-      <Table.Td>{formatCurrency(element.cost_per_unit || 0)}</Table.Td>
-      <Table.Td>{formatCurrency(element.total_cost_without_fee || 0)}</Table.Td>
       <Table.Td>
-        <Pill>{formatCurrency(element.transaction_fee || 0)}</Pill>
+        {formatCurrency(element.cost_per_unit || 0, isPrivacyMode)}
       </Table.Td>
-      <Table.Td>{formatCurrency(element.total_cost_with_fee || 0)}</Table.Td>
+      <Table.Td>
+        {formatCurrency(element.total_cost_without_fee || 0, isPrivacyMode)}
+      </Table.Td>
+      <Table.Td>
+        <Pill>
+          {formatCurrency(element.transaction_fee || 0, isPrivacyMode)}
+        </Pill>
+      </Table.Td>
+      <Table.Td>
+        {formatCurrency(element.total_cost_with_fee || 0, isPrivacyMode)}
+      </Table.Td>
       <Table.Td>
         <Menu shadow="md" width={200}>
           <Menu.Target>
@@ -90,6 +107,10 @@ const Home = () => {
     <Container size="xl" px={{ base: 0 }}>
       <Stack justify="center">
         <Flex justify="flex-end" align="center" gap="md">
+          <ActionIcon variant="default" onClick={togglePrivacyMode}>
+            {isPrivacyMode ? <IconEyeClosed /> : <IconEye />}
+          </ActionIcon>
+
           <ExportCSV />
           <Experiment />
           <AddTransaction onClick={addETFTransactionModel.onOpen} />
