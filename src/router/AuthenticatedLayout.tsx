@@ -1,16 +1,25 @@
-import { AppShell, Burger, Group, UnstyledButton } from '@mantine/core';
+import { AppShell, Burger, Group, NavLink, ScrollArea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconCoinMoneroFilled } from '@tabler/icons-react';
+import {
+  IconCashBanknote,
+  IconChevronRight,
+  IconCoinMoneroFilled,
+  IconHome,
+} from '@tabler/icons-react';
+import { useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import NavbarMenu from '../components/NavbarMenu';
 import { ROUTES } from '../constants';
-import { NAVBAR_ITEMS } from '../constants/navbar';
 import useUser from '../hooks/useUser';
-import classes from './AuthenticatedLayout.module.css';
+
+const data = [
+  { link: '/', label: 'Home', icon: IconHome },
+  { link: '/etf', label: 'ETF', icon: IconCashBanknote },
+];
 
 const AuthenticatedLayout = () => {
   const user = useUser();
   const [opened, { toggle }] = useDisclosure();
+  const [active, setActive] = useState('Home');
 
   if (!user) {
     // or you can redirect to a different page and show a message
@@ -23,7 +32,7 @@ const AuthenticatedLayout = () => {
       navbar={{
         width: 300,
         breakpoint: 'sm',
-        collapsed: { desktop: true, mobile: !opened },
+        collapsed: { mobile: !opened },
       }}
       padding="md"
     >
@@ -32,34 +41,34 @@ const AuthenticatedLayout = () => {
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Group justify="space-between" style={{ flex: 1 }}>
             <IconCoinMoneroFilled size={30} />
-            <Group ml="xl" gap={0} visibleFrom="sm">
-              {NAVBAR_ITEMS.map((item) => (
-                <UnstyledButton
-                  component="a"
-                  className={classes.control}
-                  href={item.href}
-                  key={item.title}
-                >
-                  {item.title}
-                </UnstyledButton>
-              ))}
-              <NavbarMenu />
-            </Group>
           </Group>
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar py="md" px={4}>
-        {NAVBAR_ITEMS.map((item) => (
-          <UnstyledButton
-            component="a"
-            className={classes.control}
-            href={item.href}
-            key={item.title}
-          >
-            {item.title}
-          </UnstyledButton>
-        ))}
+      <AppShell.Navbar>
+        <AppShell.Section p="md">Command Centre</AppShell.Section>
+        <AppShell.Section grow my="md" component={ScrollArea} px="md">
+          {data.map((item, index) => (
+            <>
+              <NavLink
+                leftSection={<item.icon size={16} stroke={1.5} />}
+                label={item.label}
+                data-active={item.label === active || undefined}
+                onClick={() => {
+                  setActive(item.label);
+                }}
+                href={item.link}
+                key={index}
+                color="cyan"
+                rightSection={<IconChevronRight size={16} stroke={1.5} />}
+              />
+            </>
+          ))}
+        </AppShell.Section>
+
+        <AppShell.Section p="md">
+          Navbar footer – always at the bottom
+        </AppShell.Section>
       </AppShell.Navbar>
 
       <AppShell.Main>
