@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import z from 'zod';
 import { formatCurrency } from '../../../utils/currency';
+import useAddETFTransaction from '../queries/useAddETFTransaction';
 
 // Zod schema for form validation
 const transactionSchema = z.object({
@@ -30,15 +31,30 @@ const useAddETFTransactionModel = () => {
     validate: zodResolver(transactionSchema),
   });
 
+  const resetForm = () => {
+    form.reset();
+  };
+
+  const add = useAddETFTransaction({
+    closeModal: close,
+    resetForm,
+  });
+
   const watchedValues = form.getValues();
   const totalCostWithoutFee = watchedValues.units * watchedValues.costPerUnit;
   const totalCostWithFee = totalCostWithoutFee + watchedValues.transactionFee;
 
   const handleSubmit = (values: TransactionFormValues) => {
-    // TODO: Implement transaction submission logic
-    console.log('Transaction data:', values);
-    close();
-    form.reset();
+    const data = {
+      etf_name: values.etfName,
+      purchase_datetime: values.purchaseDate,
+      units_bought: values.units,
+      cost_per_unit: values.costPerUnit,
+      transaction_fee: values.transactionFee,
+      total_cost_without_fee: totalCostWithoutFee,
+      total_cost_with_fee: totalCostWithFee,
+    };
+    add.mutate(data);
   };
   return {
     form,
