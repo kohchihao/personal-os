@@ -1,3 +1,4 @@
+import useETFInfo from '../../../queries/useETFInfo';
 import useETFStatistics from '../../../queries/useETFStatistics';
 import useETFTransactions from '../../../queries/useETFTransactions';
 import useDeleteETFTransaction from '../queries/useDeleteETFTransaction';
@@ -12,6 +13,7 @@ const useETFViewModel = () => {
     deleteETFTransaction.mutate(id);
   };
   const { data: statistics } = useETFStatistics();
+  const { data: etfInfo } = useETFInfo();
 
   return {
     transactions,
@@ -20,6 +22,7 @@ const useETFViewModel = () => {
     addETFTransactionModel,
     handleDeleteTransaction,
     isDeletingTransaction: deleteETFTransaction.isPending,
+    etfInfo,
   };
 };
 

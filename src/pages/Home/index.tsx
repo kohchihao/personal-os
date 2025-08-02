@@ -38,6 +38,7 @@ const Home = () => {
     addETFTransactionModel,
     handleDeleteTransaction,
     isDeletingTransaction,
+    etfInfo,
   } = useETFViewModel();
 
   const { isPrivacyMode, togglePrivacyMode } = usePrivacy();
@@ -132,7 +133,7 @@ const Home = () => {
           </Menu>
         </Flex>
 
-        <StatsCards statistics={statistics} />
+        <StatsCards statistics={statistics} currentETF={etfInfo} />
 
         <Card shadow="none" padding="lg" radius="md" withBorder>
           <Card.Section inheritPadding py="lg">

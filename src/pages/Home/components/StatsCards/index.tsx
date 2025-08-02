@@ -13,9 +13,10 @@ import { formatCurrency } from '../../../../utils/currency';
 
 interface StatsCardsProps {
   statistics?: Statistics;
+  currentETF?: number;
 }
 
-const StatsCards = ({ statistics }: StatsCardsProps) => {
+const StatsCards = ({ statistics, currentETF = 0 }: StatsCardsProps) => {
   const { isPrivacyMode } = usePrivacy();
   const totalUnits = statistics?.total_units || 0;
   const totalCapitalInvested = statistics?.total_invested_capital || 0;
@@ -23,6 +24,7 @@ const StatsCards = ({ statistics }: StatsCardsProps) => {
     statistics?.average_cost_per_unit_with_fee || 0;
   const totalTransactionFee = statistics?.total_transaction_fee || 0;
   const averageCostPerUnit = statistics?.average_cost_per_unit || 0;
+  const marketValue = totalUnits * (currentETF || 0);
 
   const statsData = [
     {
@@ -60,13 +62,13 @@ const StatsCards = ({ statistics }: StatsCardsProps) => {
 
     {
       title: 'Current ETF Value',
-      value: formatCurrency(0, isPrivacyMode),
+      value: formatCurrency(currentETF, isPrivacyMode),
       icon: IconWallet,
       color: 'gray',
     },
     {
       title: 'Market Value',
-      value: formatCurrency(0, isPrivacyMode),
+      value: formatCurrency(marketValue, isPrivacyMode),
       icon: IconWallet,
       color: 'gray',
     },
