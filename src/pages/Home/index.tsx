@@ -1,8 +1,10 @@
 import {
+  ActionIcon,
   Card,
   Container,
   Flex,
   Group,
+  Menu,
   Paper,
   Pill,
   Stack,
@@ -10,7 +12,7 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { IconCalendar } from '@tabler/icons-react';
+import { IconCalendar, IconDots, IconTrash } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import FullPageLoader from '../../components/FullPageLoader';
 import { formatCurrency } from '../../utils/currency';
@@ -21,7 +23,13 @@ import ExportCSV from './components/ExportCSV';
 import useETFViewModel from './viewModel';
 
 const Home = () => {
-  const { transactions, isLoading, addETFTransactionModel } = useETFViewModel();
+  const {
+    transactions,
+    isLoading,
+    addETFTransactionModel,
+    handleDeleteTransaction,
+    isDeletingTransaction,
+  } = useETFViewModel();
 
   if (isLoading) {
     return <FullPageLoader />;
@@ -49,6 +57,30 @@ const Home = () => {
         <Pill>{formatCurrency(element.transaction_fee || 0)}</Pill>
       </Table.Td>
       <Table.Td>{formatCurrency(element.total_cost_with_fee || 0)}</Table.Td>
+      <Table.Td>
+        <Menu shadow="md" width={200}>
+          <Menu.Target>
+            <ActionIcon
+              variant="subtle"
+              color="gray"
+              size="sm"
+              loading={isDeletingTransaction}
+            >
+              <IconDots size={16} />
+            </ActionIcon>
+          </Menu.Target>
+
+          <Menu.Dropdown>
+            <Menu.Item
+              color="red"
+              leftSection={<IconTrash size={14} />}
+              onClick={() => handleDeleteTransaction(element.id)}
+            >
+              Delete
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      </Table.Td>
     </Table.Tr>
   ));
 
@@ -82,6 +114,7 @@ const Home = () => {
                     <Table.Th>Total (No Fees)</Table.Th>
                     <Table.Th>Transaction Fee</Table.Th>
                     <Table.Th>Total (With Fees)</Table.Th>
+                    <Table.Th>Actions</Table.Th>
                   </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>{rows}</Table.Tbody>
