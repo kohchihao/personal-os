@@ -15,8 +15,10 @@ import {
 import {
   IconCalendar,
   IconDots,
+  IconDownload,
   IconEye,
   IconEyeClosed,
+  IconTestPipe,
   IconTrash,
 } from '@tabler/icons-react';
 import dayjs from 'dayjs';
@@ -25,8 +27,6 @@ import { usePrivacy } from '../../context/privacyContext';
 import { formatCurrency } from '../../utils/currency';
 import AddTransaction from './components/AddTransaction';
 import AddTransactionModal from './components/AddTransactionModal';
-import Experiment from './components/Experiment';
-import ExportCSV from './components/ExportCSV';
 import StatsCards from './components/StatsCards';
 import useETFViewModel from './viewModel';
 
@@ -111,9 +111,25 @@ const Home = () => {
             {isPrivacyMode ? <IconEyeClosed /> : <IconEye />}
           </ActionIcon>
 
-          <ExportCSV />
-          <Experiment />
           <AddTransaction onClick={addETFTransactionModel.onOpen} />
+
+          <Menu shadow="md" width={200}>
+            <Menu.Target>
+              <ActionIcon variant="default">
+                <IconDots size={16} />
+              </ActionIcon>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              <Menu.Label>Application</Menu.Label>
+              <Menu.Item leftSection={<IconDownload size={14} />}>
+                Export CSV
+              </Menu.Item>
+              <Menu.Item leftSection={<IconTestPipe size={14} />}>
+                Experiment
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
         </Flex>
 
         <StatsCards statistics={statistics} />
