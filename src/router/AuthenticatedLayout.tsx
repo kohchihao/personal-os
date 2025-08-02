@@ -38,6 +38,7 @@ const AuthenticatedLayout = () => {
                   component="a"
                   className={classes.control}
                   href={item.href}
+                  key={item.title}
                 >
                   {item.title}
                 </UnstyledButton>
@@ -54,6 +55,7 @@ const AuthenticatedLayout = () => {
             component="a"
             className={classes.control}
             href={item.href}
+            key={item.title}
           >
             {item.title}
           </UnstyledButton>
