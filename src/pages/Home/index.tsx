@@ -13,14 +13,15 @@ import {
 import { IconCalendar } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import FullPageLoader from '../../components/FullPageLoader';
-import useETFTransactions from '../../queries/useETFTransactions';
 import { formatCurrency } from '../../utils/currency';
 import AddTransaction from './components/AddTransaction';
+import AddTransactionModal from './components/AddTransactionModal';
 import Experiment from './components/Experiment';
 import ExportCSV from './components/ExportCSV';
+import useETFViewModel from './viewModel';
 
 const Home = () => {
-  const { data: transactions, isLoading } = useETFTransactions();
+  const { transactions, isLoading, addETFTransactionModel } = useETFViewModel();
 
   if (isLoading) {
     return <FullPageLoader />;
@@ -57,7 +58,7 @@ const Home = () => {
         <Flex justify="flex-end" align="center" gap="md">
           <ExportCSV />
           <Experiment />
-          <AddTransaction />
+          <AddTransaction onClick={addETFTransactionModel.onOpen} />
         </Flex>
 
         <Card shadow="none" padding="lg" radius="md" withBorder>
@@ -88,6 +89,8 @@ const Home = () => {
             </Paper>
           </Table.ScrollContainer>
         </Card>
+
+        <AddTransactionModal {...addETFTransactionModel} />
       </Stack>
     </Container>
   );
