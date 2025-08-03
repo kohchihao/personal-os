@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import SessionLayout from '../components/SessionLayout/index.tsx';
 import { ROUTES } from '../constants/index.ts';
+import ETF from '../pages/ETF/index.tsx';
 import Home from '../pages/Home/index.tsx';
 import Login from '../pages/Login/index.tsx';
 import NotFoundPage from '../pages/NotFoundPage/index.tsx';
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
           {
             path: ROUTES.HOME,
             element: <Home />,
+          },
+          {
+            path: ROUTES.ETF,
+            element: <ETF />,
           },
         ],
       },

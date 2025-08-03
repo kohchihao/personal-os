@@ -8,7 +8,7 @@ import {
   IconLogout2,
 } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { ROUTES } from '../constants';
 import useUser from '../hooks/useUser';
 import { usePbStore } from '../lib/pbStore';
@@ -19,9 +19,11 @@ const data = [
 ];
 
 const AuthenticatedLayout = () => {
+  const location = useLocation();
+  const currentPath = location.pathname || '/';
   const user = useUser();
   const [opened, { toggle }] = useDisclosure();
-  const [active, setActive] = useState('Home');
+  const [active, setActive] = useState(currentPath);
   const logout = usePbStore((state) => state.logoutUser);
 
   if (!user) {
@@ -56,9 +58,9 @@ const AuthenticatedLayout = () => {
               <NavLink
                 leftSection={<item.icon size={16} stroke={1.5} />}
                 label={item.label}
-                data-active={item.label === active || undefined}
+                data-active={item.link === active || undefined}
                 onClick={() => {
-                  setActive(item.label);
+                  setActive(item.link);
                 }}
                 href={item.link}
                 key={index}
