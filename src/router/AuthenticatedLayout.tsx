@@ -5,11 +5,13 @@ import {
   IconChevronRight,
   IconCoinMoneroFilled,
   IconHome,
+  IconLogout2,
 } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { ROUTES } from '../constants';
 import useUser from '../hooks/useUser';
+import { usePbStore } from '../lib/pbStore';
 
 const data = [
   { link: '/', label: 'Home', icon: IconHome },
@@ -20,6 +22,7 @@ const AuthenticatedLayout = () => {
   const user = useUser();
   const [opened, { toggle }] = useDisclosure();
   const [active, setActive] = useState('Home');
+  const logout = usePbStore((state) => state.logoutUser);
 
   if (!user) {
     // or you can redirect to a different page and show a message
@@ -67,7 +70,12 @@ const AuthenticatedLayout = () => {
         </AppShell.Section>
 
         <AppShell.Section p="md">
-          Navbar footer – always at the bottom
+          <NavLink
+            leftSection={<IconLogout2 size={16} stroke={1.5} />}
+            label={'Logout'}
+            onClick={logout}
+            color="cyan"
+          />
         </AppShell.Section>
       </AppShell.Navbar>
 
