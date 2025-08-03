@@ -54,20 +54,18 @@ const AuthenticatedLayout = () => {
         <AppShell.Section p="md">Command Centre</AppShell.Section>
         <AppShell.Section grow my="md" component={ScrollArea} px="md">
           {data.map((item, index) => (
-            <>
-              <NavLink
-                leftSection={<item.icon size={16} stroke={1.5} />}
-                label={item.label}
-                data-active={item.link === active || undefined}
-                onClick={() => {
-                  setActive(item.link);
-                }}
-                href={item.link}
-                key={index}
-                color="cyan"
-                rightSection={<IconChevronRight size={16} stroke={1.5} />}
-              />
-            </>
+            <NavLink
+              leftSection={<item.icon size={16} stroke={1.5} />}
+              label={item.label}
+              data-active={item.link === active || undefined}
+              onClick={() => {
+                setActive(item.link);
+              }}
+              href={item.link}
+              key={index}
+              color="cyan"
+              rightSection={<IconChevronRight size={16} stroke={1.5} />}
+            />
           ))}
         </AppShell.Section>
 
